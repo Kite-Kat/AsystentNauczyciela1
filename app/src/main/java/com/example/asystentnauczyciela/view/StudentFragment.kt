@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
@@ -54,14 +56,23 @@ class StudentFragment : Fragment() {
 
         viewModelStudent= ViewModelProvider(requireActivity()).get(StudentViewModel::class.java)
 
+        studentAdapter = StudentListAdapter(viewModelStudent)
 
-
-        studentAdapter = StudentListAdapter(viewModelStudent.students, viewModelStudent)
-
-        viewModelStudent.students.observe(viewLifecycleOwner, Observer { _->
-            studentAdapter.notifyDataSetChanged()
+        viewModelStudent.students.observe(viewLifecycleOwner, Observer {
+            studentAdapter.submitList(it)
 
         })
+
+        viewModelStudent.navigation.observe(viewLifecycleOwner){studentId: Int? ->
+
+            studentId?.let{ studentId:Int ->
+                val bundle = bundleOf(STUDENT_ID to studentId)
+                findNavController().navigate(R.id.action_studentFragment_to_studentEditFragment ,bundle)
+                viewModelStudent.onNavigationCompleted()
+
+            }
+
+        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student, container, false)
     }

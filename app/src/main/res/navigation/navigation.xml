@@ -65,7 +65,11 @@
         android:id="@+id/studentEditFragment"
         android:name="com.example.asystentnauczyciela.view.StudentEditFragment"
         android:label="fragment_student_edit"
-        tools:layout="@layout/fragment_student_edit" />
+        tools:layout="@layout/fragment_student_edit" >
+        <argument
+            android:name="studentId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/courseListFragment"
         android:name="com.example.asystentnauczyciela.view.CourseListFragment"
