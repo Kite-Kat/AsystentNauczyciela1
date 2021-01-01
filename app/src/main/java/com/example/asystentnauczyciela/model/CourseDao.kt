@@ -17,4 +17,7 @@ interface CourseDao {
 
     @Query("Select * from COURSE_TABLE")
     fun allCourses(): LiveData<List<Course>>
+
+//    @Query("Select name from COURSE_TABLE where id like :id")
+//    fun selectCourseName(id: Int): String
 }

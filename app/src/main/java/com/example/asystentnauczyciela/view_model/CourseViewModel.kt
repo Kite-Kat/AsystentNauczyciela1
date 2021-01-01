@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import androidx.room.Database
 import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.model.SCDatabase
 import com.example.asystentnauczyciela.model.Course
@@ -43,6 +44,7 @@ class CourseViewModel(application: Application) : AndroidViewModel(application) 
     fun editCourse(course: Course) {
         navigation.postValue(course.id)
     }
+
 
     fun onNavigationCompleted() {
         navigation.value = null

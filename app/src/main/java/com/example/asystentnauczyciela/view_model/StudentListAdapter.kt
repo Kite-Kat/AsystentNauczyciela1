@@ -29,6 +29,8 @@ class StudentListAdapter(private val viewModelStudent: StudentViewModel): ListAd
 
 
         val student = getItem(position)
+        textViewStudentName.text = student.name
+        textViewStudentSurname.text = student.surname
 
         val buttonDStudent =
             holder.itemView.findViewById<AppCompatImageButton>(R.id.imageButtonDelStudent)
