@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Asystent nauczyciela</string>
+    <string name="students">Studenci</string>
+    <string name="courses">Kursy</string>
+    <string name="report">Raport</string>
+    <string name="exams">Kolokwia</string>
+    <string name="show">Wyświetl</string>
+    <string name="add">Dodaj</string>
+    <string name="save">Zapisz</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

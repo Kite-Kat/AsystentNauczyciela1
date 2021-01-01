@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/courseFragment"
+        android:name="com.example.asystentnauczyciela.view.CourseFragment"
+        android:label="fragment_course"
+        tools:layout="@layout/fragment_course" >
+        <action
+            android:id="@+id/action_courseFragment_to_courseEditFragment"
+            app:destination="@id/courseEditFragment" />
+        <action
+            android:id="@+id/action_courseFragment_to_courseListFragment"
+            app:destination="@id/courseListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseEditFragment"
+        android:name="com.example.asystentnauczyciela.view.CourseEditFragment"
+        android:label="fragment_course_edit"
+        tools:layout="@layout/fragment_course_edit" >
+        <argument
+            android:name="courseId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.asystentnauczyciela.view.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_studentFragment"
+            app:destination="@id/studentFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentFragment"
+        android:name="com.example.asystentnauczyciela.view.StudentFragment"
+        android:label="fragment_student"
+        tools:layout="@layout/fragment_student" >
+        <action
+            android:id="@+id/action_studentFragment_to_studentEditFragment"
+            app:destination="@id/studentEditFragment" />
+        <action
+            android:id="@+id/action_studentFragment_to_studentListFragment"
+            app:destination="@id/studentListFragment" />
+        <action
+            android:id="@+id/action_studentFragment_to_studentMarkFragment"
+            app:destination="@id/studentMarkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.asystentnauczyciela.view.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" />
+    <fragment
+        android:id="@+id/studentEditFragment"
+        android:name="com.example.asystentnauczyciela.view.StudentEditFragment"
+        android:label="fragment_student_edit"
+        tools:layout="@layout/fragment_student_edit" />
+    <fragment
+        android:id="@+id/courseListFragment"
+        android:name="com.example.asystentnauczyciela.view.CourseListFragment"
+        android:label="fragment_course_list"
+        tools:layout="@layout/fragment_course_list" />
+    <fragment
+        android:id="@+id/studentListFragment"
+        android:name="com.example.asystentnauczyciela.view.StudentListFragment"
+        android:label="fragment_student_list"
+        tools:layout="@layout/fragment_student_list" />
+    <fragment
+        android:id="@+id/studentMarkFragment"
+        android:name="com.example.asystentnauczyciela.view.StudentMarkFragment"
+        android:label="fragment_student_mark"
+        tools:layout="@layout/fragment_student_mark" >
+        <action
+            android:id="@+id/action_studentMarkFragment_to_studentEditMarkFragment"
+            app:destination="@id/studentEditMarkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentEditMarkFragment"
+        android:name="com.example.asystentnauczyciela.view.StudentEditMarkFragment"
+        android:label="fragment_student_edit_mark"
+        tools:layout="@layout/fragment_student_edit_mark" />
+</navigation>
