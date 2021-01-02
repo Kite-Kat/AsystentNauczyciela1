@@ -25,6 +25,9 @@
         <argument
             android:name="courseId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_courseEditFragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
@@ -69,6 +72,9 @@
         <argument
             android:name="studentId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_studentEditFragment_to_studentFragment"
+            app:destination="@id/studentFragment" />
     </fragment>
     <fragment
         android:id="@+id/courseListFragment"

@@ -41,4 +41,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/StudentEditName" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerViewCheckBoxCourse"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        tools:layout_editor_absoluteX="202dp"
+        tools:layout_editor_absoluteY="350dp"
+        app:layout_constraintTop_toBottomOf="@+id/StudentEditSurname"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
