@@ -43,6 +43,7 @@ class StudentListAdapter(private val viewModelStudent: StudentViewModel): ListAd
 
         buttonEditStudent.setOnClickListener {
             viewModelStudent.editStudent(student)
+
         }
     }
 }

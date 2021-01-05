@@ -1,6 +1,7 @@
 package com.example.asystentnauczyciela.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,16 +15,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.model.Course
 import com.example.asystentnauczyciela.model.SCDatabase
-import com.example.asystentnauczyciela.view_model.AddStudentListAdapter
-import com.example.asystentnauczyciela.view_model.CourseListAdapter
-import com.example.asystentnauczyciela.view_model.CourseViewModel
-import com.example.asystentnauczyciela.view_model.StudentViewModel
+import com.example.asystentnauczyciela.view_model.*
 import kotlinx.android.synthetic.main.fragment_course_edit.*
 import android.app.Application as application
 
 const val COURSE_ID = "courseId"
 private lateinit var viewModelCourse: CourseViewModel
 private lateinit var viewModelStudent: StudentViewModel
+private lateinit var viewModelSc: SCViewModel
+
 
 
 class CourseEditFragment : Fragment() {
@@ -32,8 +32,11 @@ class CourseEditFragment : Fragment() {
     private lateinit var addStudentLayoutManager: LinearLayoutManager
     private lateinit var recyclerView: RecyclerView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        
 
         arguments?.let {
             val courseId = it.getInt(COURSE_ID)
@@ -50,12 +53,17 @@ class CourseEditFragment : Fragment() {
 
         viewModelStudent = ViewModelProvider(requireActivity()).get(StudentViewModel::class.java)
         viewModelCourse = ViewModelProvider(requireActivity()).get(CourseViewModel::class.java)
+        viewModelSc = ViewModelProvider(requireActivity()).get(SCViewModel::class.java)
 
         addStudentAdapter = AddStudentListAdapter(viewModelStudent)
 
-
         viewModelStudent.students.observe(viewLifecycleOwner,{
             addStudentAdapter.submitList(it)
+
+        })
+
+        viewModelSc.studentsCourses.observe(viewLifecycleOwner, {
+
         })
 
         // Inflate the layout for this fragment
@@ -64,7 +72,7 @@ class CourseEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var thisCourse:Course
+
 
         recyclerView = RecyclerViewCheckBoxStudent.apply{
             this.layoutManager = addStudentLayoutManager
@@ -83,13 +91,15 @@ class CourseEditFragment : Fragment() {
                 }
             }
             buttonSaveEditCourse.setOnClickListener {
-                thisCourse = Course(courseId,CourseEditName.text.toString())
-                viewModelCourse.updateCourse(thisCourse)
+                viewModelCourse.updateCourse(Course(courseId,CourseEditName.text.toString()))
+                viewModelSc.addToSCDatabase(viewModelStudent.checkedStudents, courseId)
+
+                Log.d("Co przekazano", viewModelStudent.checkedStudents[viewModelStudent.students.value!![0].id].toString())
                 view.findNavController().navigate(R.id.action_courseEditFragment_to_courseFragment)
+
             }
+
         }
-
-
-
+        
     }
 }

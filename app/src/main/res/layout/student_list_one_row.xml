@@ -28,14 +28,16 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="@color/A"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        android:layout_gravity="center_vertical"/>
 
     <ImageButton
         android:id="@+id/imageButtonEditStudent"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:backgroundTint="@color/A"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        android:layout_gravity="center_vertical"/>
 
     <ImageButton
         android:id="@+id/imageButtonMarks"
@@ -43,6 +45,7 @@
         android:layout_height="40dp"
         android:backgroundTint="@color/A"
         android:tint="#FFFFFF"
-        app:srcCompat="?attr/actionModePasteDrawable" />
+        app:srcCompat="?attr/actionModePasteDrawable"
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

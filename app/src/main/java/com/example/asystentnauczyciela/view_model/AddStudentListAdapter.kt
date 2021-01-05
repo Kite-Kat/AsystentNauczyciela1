@@ -1,16 +1,25 @@
 package com.example.asystentnauczyciela.view_model
 
 import android.media.AudioMetadata
+import android.os.Build
+import android.text.BoringLayout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
+import com.example.asystentnauczyciela.model.SCDatabase
 import com.example.asystentnauczyciela.model.Student
-var checkedStudents = mutableMapOf(Pair(Int,Boolean))
+import com.example.asystentnauczyciela.view.COURSE_ID
+import com.example.asystentnauczyciela.view.CourseEditFragment
+
+
 class AddStudentListAdapter(private val viewModelStudent: StudentViewModel): ListAdapter<Student, AddStudentListAdapter.StudentHolder>(AddStudentDiff){
 
     inner class StudentHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -21,24 +30,43 @@ class AddStudentListAdapter(private val viewModelStudent: StudentViewModel): Lis
         return StudentHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: StudentHolder, position: Int) {
         var checkbox = holder.itemView.findViewById<CheckBox>(R.id.checkBoxForStudentName)
 
+
+
         val student = getItem(position)
+        var checkedStudents = viewModelStudent.mapOfStudents()
+
+
+
+        if( checkedStudents[student.id]!!){
+            Log.d("warunek zaznaczenia","jestem")
+            checkbox.isChecked = true
+        }
+        else{
+            Log.d("warunek zaznaczenia","nie ma mnie")
+        }
 
         checkbox.text = student.name +" "+ student.surname
 
-        checkbox.setOnClickListener {
+        checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                checkedStudents.replace(student.id, true)
+                Log.d("zaznaczony",checkedStudents[student.id].toString())
 
-
+            }
+            else{
+                checkedStudents.replace(student.id, false)
+                Log.d("zaznaczony",checkedStudents[student.id].toString())
+            }
         }
 
     }
 
 
 }
-
-
 
 object AddStudentDiff: DiffUtil.ItemCallback<Student>(){
     override fun areItemsTheSame(oldItem: Student, newItem: Student) = oldItem == newItem

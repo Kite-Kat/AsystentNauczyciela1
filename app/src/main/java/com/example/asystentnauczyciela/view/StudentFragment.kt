@@ -1,10 +1,12 @@
 package com.example.asystentnauczyciela.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -54,7 +56,7 @@ class StudentFragment : Fragment() {
 
         studentLayoutManager = LinearLayoutManager(context)
 
-        viewModelStudent= ViewModelProvider(requireActivity()).get(StudentViewModel::class.java)
+        viewModelStudent = ViewModelProvider(requireActivity()).get(StudentViewModel::class.java)
 
         studentAdapter = StudentListAdapter(viewModelStudent)
 
@@ -63,11 +65,11 @@ class StudentFragment : Fragment() {
 
         })
 
-        viewModelStudent.navigation.observe(viewLifecycleOwner){studentId: Int? ->
+        viewModelStudent.navigation.observe(viewLifecycleOwner) { studentId: Int? ->
 
-            studentId?.let{ studentId:Int ->
+            studentId?.let { studentId: Int ->
                 val bundle = bundleOf(STUDENT_ID to studentId)
-                findNavController().navigate(R.id.action_studentFragment_to_studentEditFragment ,bundle)
+                findNavController().navigate(R.id.action_studentFragment_to_studentEditFragment, bundle)
                 viewModelStudent.onNavigationCompleted()
 
             }
@@ -84,27 +86,14 @@ class StudentFragment : Fragment() {
             this.layoutManager = studentLayoutManager
             this.adapter = studentAdapter
         }
-        buttonAddStudent.setOnClickListener{viewModelStudent.addStudent(StudentNameLabel.text.toString(), StudentSurnameLabel.text.toString())}
-        buttonShowStudents.setOnClickListener { view->view.findNavController().navigate(R.id.action_studentFragment_to_studentListFragment) }
+        buttonAddStudent.setOnClickListener { viewModelStudent.addStudent(StudentNameLabel.text.toString(), StudentSurnameLabel.text.toString())
+        view.hideKeyboard()}
+        buttonShowStudents.setOnClickListener { view -> view.findNavController().navigate(R.id.action_studentFragment_to_studentListFragment) }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StudentFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                StudentFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
