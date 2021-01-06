@@ -31,7 +31,7 @@ class CourseListAdapter(private val viewModelCourse: CourseViewModel) : ListAdap
 
         val buttonD = holder.itemView.findViewById<AppCompatImageButton>(R.id.imageButtonDelCourse)
         val buttonEdit = holder.itemView.findViewById<AppCompatImageButton>(R.id.imageButtonEditCourse)
-
+        val buttonMark = holder.itemView.findViewById<AppCompatImageButton>(R.id.imageButtonMarks)
 
         buttonD.setOnClickListener {
             viewModelCourse.deleteCourse(course)
@@ -41,6 +41,13 @@ class CourseListAdapter(private val viewModelCourse: CourseViewModel) : ListAdap
         buttonEdit.setOnClickListener {
             viewModelCourse.editCourse(course)
         }
+
+        buttonMark.setOnClickListener(){
+            viewModelCourse.editMark(course)
+
+        }
+
+
     }
 }
 

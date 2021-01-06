@@ -1,14 +1,10 @@
 package com.example.asystentnauczyciela.view_model
 
 import android.app.Application
-import androidx.core.os.bundleOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
-import androidx.room.Database
-import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.model.SCDatabase
 import com.example.asystentnauczyciela.model.Course
 import com.example.asystentnauczyciela.model.repositories.CourseRepository
@@ -20,7 +16,8 @@ class CourseViewModel(application: Application) : AndroidViewModel(application) 
 
     private val courseRepository: CourseRepository = CourseRepository(SCDatabase.getDatabase(application).courseDao())
 
-    val navigation = MutableLiveData<Int?>()
+    val navigationToEdit = MutableLiveData<Int?>()
+    val navigationToMarks = MutableLiveData<Int?>()
 
     fun addCourse(name: String) {
         viewModelScope.launch {
@@ -42,11 +39,16 @@ class CourseViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun editCourse(course: Course) {
-        navigation.postValue(course.id)
+        navigationToEdit.postValue(course.id)
+    }
+
+    fun editMark(course: Course){
+        navigationToMarks.postValue(course.id)
     }
 
 
     fun onNavigationCompleted() {
-        navigation.value = null
+        navigationToEdit.value = null
+        navigationToMarks.value = null
     }
 }

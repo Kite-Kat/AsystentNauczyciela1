@@ -34,6 +34,17 @@ class SCViewModel(application: Application):AndroidViewModel(application) {
         return value
     }
 
+    fun studentsInCourses(idCourse: Int): List<Student>{
+        var studentsInCourses = mutableListOf<Student>()
+        for (student in students.value!!){
+            if(isConnectionInDB(student.id,idCourse)){
+                studentsInCourses.add(student)
+            }
+
+        }
+        return studentsInCourses
+    }
+
     fun addSC(student_id: Int, course_id:Int){
         viewModelScope.launch {
             StudentCourseRepository.add(StudentCourse(id=0,student_id,course_id))

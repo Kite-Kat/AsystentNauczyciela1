@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_courseFragment_to_courseListFragment"
             app:destination="@id/courseListFragment" />
+        <action
+            android:id="@+id/action_courseFragment_to_studentListFragment"
+            app:destination="@id/studentListFragment" />
     </fragment>
     <fragment
         android:id="@+id/courseEditFragment"
@@ -52,12 +55,6 @@
         <action
             android:id="@+id/action_studentFragment_to_studentEditFragment"
             app:destination="@id/studentEditFragment" />
-        <action
-            android:id="@+id/action_studentFragment_to_studentListFragment"
-            app:destination="@id/studentListFragment" />
-        <action
-            android:id="@+id/action_studentFragment_to_studentMarkFragment"
-            app:destination="@id/studentMarkFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
@@ -85,7 +82,14 @@
         android:id="@+id/studentListFragment"
         android:name="com.example.asystentnauczyciela.view.StudentListFragment"
         android:label="fragment_student_list"
-        tools:layout="@layout/fragment_student_list" />
+        tools:layout="@layout/fragment_student_list" >
+        <action
+            android:id="@+id/action_studentListFragment_to_studentMarkFragment"
+            app:destination="@id/studentMarkFragment" />
+        <argument
+            android:name="course_id"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/studentMarkFragment"
         android:name="com.example.asystentnauczyciela.view.StudentMarkFragment"

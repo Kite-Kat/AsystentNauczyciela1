@@ -88,7 +88,7 @@ class StudentFragment : Fragment() {
         }
         buttonAddStudent.setOnClickListener { viewModelStudent.addStudent(StudentNameLabel.text.toString(), StudentSurnameLabel.text.toString())
         view.hideKeyboard()}
-        buttonShowStudents.setOnClickListener { view -> view.findNavController().navigate(R.id.action_studentFragment_to_studentListFragment) }
+
     }
 
 

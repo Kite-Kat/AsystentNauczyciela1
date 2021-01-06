@@ -8,33 +8,20 @@
     tools:context=".view.CourseFragment">
 
 
-    <Button
-        android:id="@+id/buttonShowStudents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/A"
-        android:text="@string/show"
-        app:layout_constraintBottom_toTopOf="@+id/StudentNameLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
     <EditText
         android:id="@+id/StudentNameLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="4dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Student's name"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/StudentSurnameLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonShowStudents"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/StudentSurnameLabel"
@@ -56,7 +43,6 @@
         android:id="@+id/buttonAddStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:backgroundTint="@color/A"
         android:gravity="right"
         android:text="@string/add"

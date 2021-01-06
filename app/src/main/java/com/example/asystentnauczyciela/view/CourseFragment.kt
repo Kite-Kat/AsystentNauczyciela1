@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,14 +46,27 @@ class CourseFragment : Fragment() {
             courseAdapter.submitList(it)
         })
 
-        viewModelCourse.navigation.observe(viewLifecycleOwner) { courseId: Int? ->
+        viewModelCourse.navigationToEdit.observe(viewLifecycleOwner) { courseId: Int? ->
 
             courseId?.let { courseId: Int ->
                 val bundle = bundleOf(COURSE_ID to courseId)
                 findNavController().navigate(R.id.action_courseFragment_to_courseEditFragment, bundle)
+
                 viewModelCourse.onNavigationCompleted()
             }
 
+        }
+
+        viewModelCourse.navigationToMarks.observe(viewLifecycleOwner){courseId: Int? ->
+            courseId?.let{ courseId:Int->
+                val bundle = bundleOf(COURSEID to courseId)
+                findNavController().navigate(R.id.action_courseFragment_to_studentListFragment, bundle)
+
+                viewModelCourse.onNavigationCompleted()
+
+
+
+            }
         }
 
         // Inflate the layout for this fragment
@@ -72,9 +84,9 @@ class CourseFragment : Fragment() {
         }
         buttonAddCourse.setOnClickListener { viewModelCourse.addCourse(CourseNameLabel.text.toString())
         view.hideKeyboard() }
-        buttonShowCourses.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_courseFragment_to_courseListFragment)
-        }
+
+
+
     }
 
     fun View.hideKeyboard() {

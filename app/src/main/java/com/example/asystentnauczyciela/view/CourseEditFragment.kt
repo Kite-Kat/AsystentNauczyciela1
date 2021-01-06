@@ -89,12 +89,14 @@ class CourseEditFragment : Fragment() {
                 viewModelSc.addStudentToSCDatabase(addStudentAdapter.checkedStudents, courseId)
 
                 view.findNavController().navigate(R.id.action_courseEditFragment_to_courseFragment)
+                
+
 
             }
 
         }
 
     }
-    companion object { fun newInstance() = CourseEditFragment() }
+
 }
 
