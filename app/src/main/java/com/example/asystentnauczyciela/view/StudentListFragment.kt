@@ -11,16 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
-import com.example.asystentnauczyciela.view_model.CourseViewModel
-import com.example.asystentnauczyciela.view_model.SCViewModel
-import com.example.asystentnauczyciela.view_model.StudentViewModel
-import com.example.asystentnauczyciela.view_model.StudentsInCourseAdapter
+import com.example.asystentnauczyciela.view_model.*
 import kotlinx.android.synthetic.main.fragment_student_list.*
 
 const val COURSEID = "course_ID"
 private lateinit var viewModelStudent: StudentViewModel
 private lateinit var viewModelSc: SCViewModel
 private lateinit var viewModelCourse: CourseViewModel
+private lateinit var viewModelMark: MarkViewModel
 
 
 
@@ -48,8 +46,9 @@ class StudentListFragment : Fragment() {
             viewModelStudent = ViewModelProvider(requireActivity()).get(StudentViewModel::class.java)
             viewModelSc = ViewModelProvider(requireActivity()).get(SCViewModel::class.java)
             viewModelCourse = ViewModelProvider(requireActivity()).get(CourseViewModel::class.java)
+            viewModelMark = ViewModelProvider(requireActivity()).get(MarkViewModel::class.java)
 
-            studentListAdapter = StudentsInCourseAdapter(courseID,viewModelSc.studentsCourses)
+            studentListAdapter = StudentsInCourseAdapter(viewModelStudent ,courseID,viewModelSc.studentsCourses)
 
             viewModelStudent.students.observe(viewLifecycleOwner, {
                 studentListAdapter.submitList(it)
@@ -58,6 +57,19 @@ class StudentListFragment : Fragment() {
             viewModelSc.studentsCourses.observe(viewLifecycleOwner,{
 
             })
+
+            viewModelMark.marks.observe(viewLifecycleOwner,{
+
+            })
+
+            viewModelStudent.navigationToEditMark.observe(viewLifecycleOwner){studentId: Int?->
+                studentId?.let{studentId:Int->
+                    val bundle = bundleOf(student_ID to studentId, COURSE_id to courseID)
+                    findNavController().navigate(R.id.action_studentListFragment_to_studentMarkFragment,bundle)
+                    viewModelStudent.onNavigationCompleted()
+                }
+
+            }
 
         }
         // Inflate the layout for this fragment

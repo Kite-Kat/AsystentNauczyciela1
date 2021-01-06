@@ -18,7 +18,7 @@
         android:layout_marginBottom="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Course's name"
+        android:hint="Nazwa kursu"
         app:layout_constraintBottom_toTopOf="@+id/buttonAddCourse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

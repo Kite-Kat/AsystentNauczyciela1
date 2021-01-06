@@ -10,13 +10,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
-import com.example.asystentnauczyciela.view_model.CourseListAdapter
-import com.example.asystentnauczyciela.view_model.CourseViewModel
 import com.example.asystentnauczyciela.view_model.StudentListAdapter
 import com.example.asystentnauczyciela.view_model.StudentViewModel
 import kotlinx.android.synthetic.main.fragment_course.*
@@ -65,7 +62,7 @@ class StudentFragment : Fragment() {
 
         })
 
-        viewModelStudent.navigation.observe(viewLifecycleOwner) { studentId: Int? ->
+        viewModelStudent.navigationToEditStudent.observe(viewLifecycleOwner) { studentId: Int? ->
 
             studentId?.let { studentId: Int ->
                 val bundle = bundleOf(STUDENT_ID to studentId)

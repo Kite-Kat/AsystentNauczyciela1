@@ -1,17 +1,11 @@
 package com.example.asystentnauczyciela.view_model
 
 import android.app.Application
-import android.os.Build
-import android.text.TextUtils.lastIndexOf
-import android.util.Log
-import android.widget.ListAdapter
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import com.example.asystentnauczyciela.model.SCDatabase
 import com.example.asystentnauczyciela.model.Student
 import com.example.asystentnauczyciela.model.StudentCourse
-import com.example.asystentnauczyciela.model.repositories.StudentCourseRepository
 import com.example.asystentnauczyciela.model.repositories.StudentRepository
 
 
@@ -23,8 +17,8 @@ class StudentViewModel(application: Application): AndroidViewModel(application) 
 
     private val studentRepository:StudentRepository = StudentRepository(SCDatabase.getDatabase(application).studentDao())
 
-    val navigation = MutableLiveData<Int?>()
-
+    val navigationToEditStudent = MutableLiveData<Int?>()
+    val navigationToEditMark = MutableLiveData<Int?>()
 
 
 
@@ -54,12 +48,17 @@ class StudentViewModel(application: Application): AndroidViewModel(application) 
     }
 
     fun editStudent(student: Student){
-        navigation.postValue(student.id)
+        navigationToEditStudent.postValue(student.id)
 
     }
 
+    fun editMark(student: Student){
+        navigationToEditMark.postValue(student.id)
+    }
+
     fun onNavigationCompleted(){
-        navigation.value = null
+        navigationToEditStudent.value = null
+        navigationToEditMark.value = null
     }
 
 

@@ -98,6 +98,12 @@
         <action
             android:id="@+id/action_studentMarkFragment_to_studentEditMarkFragment"
             app:destination="@id/studentEditMarkFragment" />
+        <argument
+            android:name="student_id"
+            app:argType="integer" />
+        <argument
+            android:name="course_id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/studentEditMarkFragment"

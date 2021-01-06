@@ -1,60 +1,72 @@
 package com.example.asystentnauczyciela.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
+import com.example.asystentnauczyciela.view_model.*
+import kotlinx.android.synthetic.main.fragment_student_mark.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StudentMarkFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+const val COURSE_id = "course_id"
+ const val student_ID = "student_id"
+private lateinit var viewModelStudent: StudentViewModel
+private lateinit var viewModelSc: SCViewModel
+private lateinit var viewModelCourse: CourseViewModel
+private lateinit var viewModelMark: MarkViewModel
+
+
 class StudentMarkFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var MarksListAdapter: MarksListAdapter
+    private lateinit var studentListLayoutManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student_mark, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StudentMarkFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StudentMarkFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let{
+            val studentID = it.getInt(student_ID)
+            val courseID = it.getInt(COURSE_id)
+
+
+            textViewAverage.text = studentID.toString()+courseID.toString()
+
+        }
+
+        context?.let {
+            ArrayAdapter.createFromResource(
+                    it,
+                    R.array.spinnerMarkElements,
+                    android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerWithMarkses.adapter = adapter
             }
+        }
     }
+
+
 }

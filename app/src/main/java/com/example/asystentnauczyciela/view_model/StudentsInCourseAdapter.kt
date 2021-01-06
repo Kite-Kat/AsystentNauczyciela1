@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,7 @@ import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.model.Student
 import com.example.asystentnauczyciela.model.StudentCourse
 
-class StudentsInCourseAdapter( private val courseId: Int, private val connections: LiveData<List<StudentCourse>>):ListAdapter<Student, StudentsInCourseAdapter.StudentHolder>(StudentsInCourseDiff){
+class StudentsInCourseAdapter( private val studentViewModel: StudentViewModel,private val courseId: Int, private val connections: LiveData<List<StudentCourse>>):ListAdapter<Student, StudentsInCourseAdapter.StudentHolder>(StudentsInCourseDiff){
 
     inner class StudentHolder(view: View): RecyclerView.ViewHolder(view)
 
@@ -49,6 +50,10 @@ class StudentsInCourseAdapter( private val courseId: Int, private val connection
             textViewStudentSurname.isVisible = false
             buttonEditStudent.isVisible = false
 
+        }
+
+        buttonEditStudent.setOnClickListener {
+            studentViewModel.editMark(student)
         }
 
     }
