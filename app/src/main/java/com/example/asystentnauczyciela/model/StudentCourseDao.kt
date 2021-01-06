@@ -18,4 +18,6 @@ interface StudentCourseDao {
     @Query("Select * from STUDENT_COURSE_TABLE")
     fun allSC(): LiveData<List<StudentCourse>>
 
+    @Query("Select * from STUDENT_COURSE_TABLE where course_id=:courseId")
+    fun get(courseId: Int): List<StudentCourse>
 }

@@ -1,47 +1,54 @@
 package com.example.asystentnauczyciela.view_model
 
 import android.app.Application
-import android.os.Build
-import android.text.TextUtils.lastIndexOf
-import android.util.Log
-import android.widget.ListAdapter
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.*
-import kotlinx.coroutines.launch
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.asystentnauczyciela.model.SCDatabase
 import com.example.asystentnauczyciela.model.Student
 import com.example.asystentnauczyciela.model.StudentCourse
 import com.example.asystentnauczyciela.model.repositories.StudentCourseRepository
 import com.example.asystentnauczyciela.model.repositories.StudentRepository
+import com.example.asystentnauczyciela.view.uimodel.CourseStudentItem
+import kotlinx.coroutines.launch
 
 
-
-class StudentViewModel(application: Application): AndroidViewModel(application) {
+class StudentViewModel(application: Application) : AndroidViewModel(application) {
 
     val students: LiveData<List<Student>> = SCDatabase.getDatabase(application).studentDao().allStudent()
-    private var studentCourses: LiveData<List<StudentCourse>> = SCDatabase.getDatabase(application).studentCourseDao().allSC()
+    val studentItems: MutableLiveData<List<CourseStudentItem>> = MutableLiveData<List<CourseStudentItem>>()
 
-    private val studentRepository:StudentRepository = StudentRepository(SCDatabase.getDatabase(application).studentDao())
-    private val studentCourseRepository:StudentCourseRepository = StudentCourseRepository(SCDatabase.getDatabase(application).studentCourseDao())
+    private val studentRepository: StudentRepository = StudentRepository(SCDatabase.getDatabase(application).studentDao())
+
+    private val studentCourseRepository = StudentCourseRepository(SCDatabase.getDatabase(application).studentCourseDao())
 
     val navigation = MutableLiveData<Int?>()
-    var checkedStudents = mutableMapOf<Int,Boolean>()
+    val checkedStudents = mutableMapOf<Int, Boolean>()
 
+    fun setArgs(courseId: Int) {
+        viewModelScope.launch {
+            val checkedStudents = createCheckedStudentList(courseId)
+            studentItems.value = checkedStudents
+        }
+    }
 
+    private suspend fun createCheckedStudentList(courseId: Int): List<CourseStudentItem> {
+        val studentCourses = studentCourseRepository.getStudentCourses(courseId)
+        val checkedStudents = getCheckedStudents(studentCourses)
+        return checkedStudents
+    }
 
-
-    fun addStudent(name:String, surname:String)
-    {
+    fun addStudent(name: String, surname: String) {
 
         //musi byc wykonane asynchronicznie
         viewModelScope.launch {
-            studentRepository.add(Student(id = 0,name = name, surname = surname))
+            studentRepository.add(Student(id = 0, name = name, surname = surname))
         }
 
     }
 
-    fun deleteStudent(student: Student)
-    {
+    fun deleteStudent(student: Student) {
         viewModelScope.launch {
             studentRepository.delete(student)
         }
@@ -49,40 +56,53 @@ class StudentViewModel(application: Application): AndroidViewModel(application) 
 
     }
 
-    fun updateStudent(student: Student){
+    fun updateStudent(student: Student) {
         viewModelScope.launch {
             studentRepository.update(student)
         }
     }
 
-    fun editStudent(student: Student){
+    fun editStudent(student: Student) {
         navigation.postValue(student.id)
 
     }
 
-    fun onNavigationCompleted(){
+    fun onNavigationCompleted() {
         navigation.value = null
     }
 
 
+    private fun getCheckedStudents(studentCourses: List<StudentCourse>): List<CourseStudentItem> {
+        // 1. Mapowanie Student to Student
 
-    @RequiresApi(Build.VERSION_CODES.N)
-
-        fun mapOfStudents(): MutableMap<Int, Boolean> {
-        Log.d("sc", studentCourses.value.toString())
-
-        for (student in students.value!!){
-                checkedStudents.put(student.id,false)
-        }
-
-        if(!studentCourses.value.isNullOrEmpty()){
-            for(sc in studentCourses.value!!){
-                checkedStudents.replace(sc.student_id,true)
-
+        val checkedStudents = mutableListOf<CourseStudentItem>()
+        for (student in students.value!!) {
+            checkedStudents.put(student.id, false)
+            for (sc in studentCourses.value!!) {
+                val courseStudentItem = if (isInDatabase) {
+                    CourseStudentItem(student.id, student.name, student.surname, true)
+                } else {
+                    CourseStudentItem(student.id, student.name, student.surname, false)
+                }
+                checkedStudents.add(courseStudentItem)
             }
+//            viewModelScope.launch {
+//                val studentCourses = studentCourseRepository.getStudentCourses(courseId)
+//
+//            }
+//            if (!studentCourses.value.isNullOrEmpty()) {
+//
+//            }
         }
-
-      return checkedStudents
+        return checkedStudents
     }
 
+    fun onStudentCheckedChangeListener(studentId: Int, checked: Boolean) {
+        //ToDo update list to database
+
+        viewModelScope.launch {
+            val courseStudentItem = createCheckedStudentList()
+            studentItems.value = courseStudentItem
+        }
+    }
 }
