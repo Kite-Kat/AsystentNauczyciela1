@@ -23,21 +23,23 @@ import com.example.asystentnauczyciela.view.CourseEditFragment
 class AddStudentListAdapter(private val viewModelStudent: StudentViewModel): ListAdapter<Student, AddStudentListAdapter.StudentHolder>(AddStudentDiff){
 
     inner class StudentHolder(view: View) : RecyclerView.ViewHolder(view)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.add_student_one_row, parent, false)
-        return StudentHolder(view)
+                return StudentHolder(view)
     }
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: StudentHolder, position: Int) {
         var checkbox = holder.itemView.findViewById<CheckBox>(R.id.checkBoxForStudentName)
 
+        var checkedStudents = viewModelStudent.mapOfStudents()
+
 
 
         val student = getItem(position)
-        var checkedStudents = viewModelStudent.mapOfStudents()
+
 
 
 
@@ -46,6 +48,7 @@ class AddStudentListAdapter(private val viewModelStudent: StudentViewModel): Lis
             checkbox.isChecked = true
         }
         else{
+            checkbox.isChecked = false
             Log.d("warunek zaznaczenia","nie ma mnie")
         }
 
@@ -54,12 +57,14 @@ class AddStudentListAdapter(private val viewModelStudent: StudentViewModel): Lis
         checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 checkedStudents.replace(student.id, true)
-                Log.d("zaznaczony",checkedStudents[student.id].toString())
+//                Log.d("zaznaczony",checkedStudents[student.id].toString())
+//                Log.d("mapaAdapter",checkedStudents.toString())
 
             }
             else{
                 checkedStudents.replace(student.id, false)
-                Log.d("zaznaczony",checkedStudents[student.id].toString())
+//                Log.d("zaznaczony",checkedStudents[student.id].toString())
+//                Log.d("mapaAdapter",checkedStudents.toString())
             }
         }
 

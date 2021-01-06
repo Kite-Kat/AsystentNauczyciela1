@@ -1,7 +1,9 @@
 package com.example.asystentnauczyciela.view_model
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -18,6 +20,9 @@ class SCViewModel(application: Application):AndroidViewModel(application) {
 
     val studentsCourses : LiveData<List<StudentCourse>> = SCDatabase.getDatabase(application).studentCourseDao().allSC()
     private val StudentCourseRepository:StudentCourseRepository = StudentCourseRepository(SCDatabase.getDatabase(application).studentCourseDao())
+    private val students: LiveData<List<Student>> = SCDatabase.getDatabase((application)).studentDao().allStudent()
+
+
 
     fun addSC(student_id: Int, course_id:Int){
         viewModelScope.launch {
@@ -62,8 +67,6 @@ class SCViewModel(application: Application):AndroidViewModel(application) {
         }
 
     }
-
-
 
 
 }
