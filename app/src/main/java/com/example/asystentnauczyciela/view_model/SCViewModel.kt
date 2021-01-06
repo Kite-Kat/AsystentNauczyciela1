@@ -22,7 +22,17 @@ class SCViewModel(application: Application):AndroidViewModel(application) {
     private val StudentCourseRepository:StudentCourseRepository = StudentCourseRepository(SCDatabase.getDatabase(application).studentCourseDao())
     private val students: LiveData<List<Student>> = SCDatabase.getDatabase((application)).studentDao().allStudent()
 
+    fun isConnectionInDB(idStudent:Int, idCourse: Int): Boolean{
+        var value = false
+        for (sc in studentsCourses.value!!){
+            if(idStudent == sc.student_id && idCourse == sc.course_id){
+                value = true
+                return value
 
+            }
+        }
+        return value
+    }
 
     fun addSC(student_id: Int, course_id:Int){
         viewModelScope.launch {
@@ -36,33 +46,62 @@ class SCViewModel(application: Application):AndroidViewModel(application) {
         }
     }
 
-    fun addToSCDatabase(map: MutableMap<Int,Boolean>, courseID: Int){
+    fun addStudentToSCDatabase(map: MutableMap<Int,Boolean>, courseID: Int){
 
         for (maps in map) {
 
             if (studentsCourses.value.isNullOrEmpty()) {
                 if(maps.value) {
                     addSC(maps.key, courseID)
-                    Log.d("baza",studentsCourses.value.isNullOrEmpty().toString())
-
                 }
             }
             else {
-                for (sc in studentsCourses.value!!) {
-                    Log.d("baza",sc.student_id.toString())
                     if (!maps.value) {
-                        if(maps.key == sc.student_id && courseID == sc.course_id){
-                            deleteSC(sc)
+                        if(isConnectionInDB(maps.key, courseID)){
+                            val thisSC = studentsCourses.value?.find {
+                                x -> x.course_id == courseID && x.student_id == maps.key }
+                            deleteSC(thisSC!!)
                         }
                     }
                     else{
-                        if(!(maps.key == sc.student_id && courseID == sc.course_id)){
+                        if(!isConnectionInDB(maps.key, courseID)){
                             addSC(maps.key, courseID)
 
                         }
                     }
+            }
+
+
+        }
+
+    }
+
+    fun addCourseToSCDatabase(map: MutableMap<Int,Boolean>, studentID: Int){
+
+        for (maps in map) {
+
+            if (studentsCourses.value.isNullOrEmpty()) {
+                if(maps.value) {
+                    addSC( studentID, maps.key)
                 }
             }
+            else {
+
+                    if (!maps.value) {
+                        if(isConnectionInDB(studentID, maps.key)){
+                            val thisSC = studentsCourses.value?.find {
+                                x -> x.course_id == maps.key && x.student_id == studentID }
+                            deleteSC(thisSC!!)
+                        }
+                    }
+                    else{
+                        if(!isConnectionInDB(studentID, maps.key)){
+                            addSC( studentID, maps.key)
+
+                        }
+                    }
+
+                }
 
         }
 

@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Student::class, Course::class, StudentCourse::class, Mark::class],version=3, exportSchema = true)
+@Database(entities = [Student::class, Course::class, StudentCourse::class, Mark::class],version=4, exportSchema = true)
 abstract class SCDatabase:RoomDatabase() {
 
     abstract fun studentDao(): StudentDao
