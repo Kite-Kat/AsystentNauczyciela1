@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -14,24 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.model.Course
-import com.example.asystentnauczyciela.model.SCDatabase
 import com.example.asystentnauczyciela.view_model.*
 import kotlinx.android.synthetic.main.fragment_course_edit.*
-import android.app.Application as application
 
 const val COURSE_ID = "courseId"
-private lateinit var viewModelCourse: CourseViewModel
-private lateinit var viewModelStudent: StudentViewModel
-private lateinit var viewModelSc: SCViewModel
-
-
-
 class CourseEditFragment : Fragment() {
 
     private lateinit var addStudentAdapter: AddStudentListAdapter
     private lateinit var addStudentLayoutManager: LinearLayoutManager
     private lateinit var recyclerView: RecyclerView
 
+    private lateinit var viewModelCourse: CourseViewModel
+    private lateinit var viewModelStudent: StudentViewModel
+    private lateinit var viewModelSc: SCViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +50,8 @@ class CourseEditFragment : Fragment() {
 
         addStudentAdapter = AddStudentListAdapter(viewModelStudent)
 
-        viewModelStudent.students.observe(viewLifecycleOwner,{
+        viewModelStudent.studentItems.observe(viewLifecycleOwner,{
             addStudentAdapter.submitList(it)
-
-        })
-
-        viewModelSc.studentsCourses.observe(viewLifecycleOwner, {
-
         })
 
         // Inflate the layout for this fragment
@@ -81,6 +69,7 @@ class CourseEditFragment : Fragment() {
 
         arguments?.let{
             val courseId = it.getInt(COURSE_ID)
+            viewModelStudent.setArgs(courseId)
 
             val courses = viewModelCourse.courses.value!!
             for (course in courses){
