@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/AddCourseOR"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/foxy_transparent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
     <CheckBox
         android:id="@+id/checkBoxForCourseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:buttonTint="@color/foxy"
         android:text="CheckBox" />
+
+</LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

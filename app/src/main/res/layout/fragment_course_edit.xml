@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.CourseEditFragment" >
+    tools:context=".view.CourseEditFragment"
+    android:background="@drawable/background">
 
     <Button
         android:id="@+id/buttonSaveEditCourse"
@@ -15,6 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/dark_blue"
+        android:textColor="@color/white_smoky"
         app:layout_constraintBottom_toTopOf="@+id/CourseEditName"/>
 
     <EditText
@@ -24,7 +27,7 @@
         android:layout_marginHorizontal="5dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Nazwa kursu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSaveEditCourse" />

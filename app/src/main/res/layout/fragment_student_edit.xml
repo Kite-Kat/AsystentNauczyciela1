@@ -5,12 +5,15 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.StudentEditFragment" >
+    tools:context=".view.StudentEditFragment"
+    android:background="@drawable/background">
 
     <Button
         android:id="@+id/buttonSaveEditStudent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_blue"
+        android:textColor="@color/white_smoky"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +27,7 @@
         android:layout_marginHorizontal="5dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Imie Studenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSaveEditStudent" />
@@ -36,7 +39,7 @@
         android:layout_marginHorizontal="5dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Surname"
+        android:hint="Nazwisko Studenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/StudentEditName" />

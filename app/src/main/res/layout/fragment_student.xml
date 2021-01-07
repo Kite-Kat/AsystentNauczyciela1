@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/background"
     tools:context=".view.CourseFragment">
 
 
@@ -15,7 +15,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginTop="5dp"
         android:ems="10"
-        android:hint="Student's name"
+        android:hint="Imie studenta"
         android:inputType="textPersonName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/StudentSurnameLabel"
@@ -31,7 +31,7 @@
         android:layout_marginTop="5dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Student's surname"
+        android:hint="Nazwisko studenta"
         app:layout_constraintBottom_toTopOf="@+id/buttonAddStudent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -43,8 +43,8 @@
         android:id="@+id/buttonAddStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/A"
-        android:gravity="right"
+        android:backgroundTint="@color/dark_blue"
+        android:textColor="@color/white_smoky"
         android:text="@string/add"
         app:layout_constraintBottom_toTopOf="@+id/RecyclerViewStudents"
         app:layout_constraintEnd_toEndOf="parent"

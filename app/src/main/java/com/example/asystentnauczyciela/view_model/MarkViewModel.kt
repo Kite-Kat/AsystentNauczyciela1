@@ -86,19 +86,31 @@ class MarkViewModel(application: Application):AndroidViewModel(application) {
         var index = 0
 
         when(mark) {
-            1.0 -> index = 0
-            1.5 -> index = 1
-            2.0 -> index = 2
-            2.5 -> index = 3
-            3.0 -> index = 4
-            3.5 -> index = 5
-            4.0 -> index = 6
-            4.5 -> index = 7
-            5.0 -> index = 8
-            5.5 -> index = 9
-            6.0 -> index = 10
+
+            2.0 -> index = 0
+            3.0 -> index = 1
+            3.5 -> index = 2
+            4.0 -> index = 3
+            4.5 -> index = 4
+            5.0 -> index = 5
+
         }
 
         return index
+    }
+
+    fun calculateAverageForStudent(course_id: Int, student_id: Int):Double{
+        var average = 0.0
+
+        if(marks.value != null){
+            val thisMarks = findMarksForSC(student_id,course_id)
+            for(mark in thisMarks){
+                average += mark.mark
+            }
+            average /= thisMarks.size
+        }
+
+        return average
+
     }
 }

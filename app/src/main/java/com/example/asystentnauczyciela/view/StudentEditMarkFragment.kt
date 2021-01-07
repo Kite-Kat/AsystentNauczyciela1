@@ -1,11 +1,15 @@
 package com.example.asystentnauczyciela.view
 
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,6 +19,7 @@ import com.example.asystentnauczyciela.view_model.CourseViewModel
 import com.example.asystentnauczyciela.view_model.MarkViewModel
 import com.example.asystentnauczyciela.view_model.StudentViewModel
 import kotlinx.android.synthetic.main.fragment_student_edit_mark.*
+import kotlinx.android.synthetic.main.fragment_student_mark.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,17 +54,35 @@ class StudentEditMarkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        context?.let {
-            ArrayAdapter.createFromResource(
-                    it,
-                    R.array.spinnerMarkElements,
-                    android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinnerEdycjaOceny.adapter = adapter
+        context?.let {context->
+            val list = mutableListOf(
+                    "2",
+                    "3",
+                    "3.5",
+                    "4",
+                    "4.5",
+                    "5"
+            )
+            val adapter: ArrayAdapter<String> = object: ArrayAdapter<String>(
+                    context, android.R.layout.simple_spinner_dropdown_item,
+                    list
+            ){
+                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
+                    view.setTypeface(Typeface.MONOSPACE, Typeface.BOLD)
+                    view.setTextColor(Color.parseColor("#C58648"))
+
+                    if( position==spinnerEdycjaOceny.selectedItemPosition){
+                        view.background= ColorDrawable(Color.parseColor("#80C58648"))
+                    }
+                    return view
+                }
 
             }
+            spinnerEdycjaOceny.adapter=adapter
         }
+
+
         arguments?.let{
             val markID = it.getInt(MARK_ID)
             val mark = viewModelMark.getMarkById(markID)

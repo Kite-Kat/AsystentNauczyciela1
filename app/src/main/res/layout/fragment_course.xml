@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/background"
     tools:context=".view.CourseFragment">
 
 
@@ -31,8 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:backgroundTint="@color/A"
-        android:gravity="right"
+        android:backgroundTint="@color/dark_blue"
+        android:textColor="@color/white_smoky"
         android:text="@string/add"
         app:layout_constraintBottom_toTopOf="@+id/RecyclerViewCourses"
         app:layout_constraintEnd_toEndOf="parent"
