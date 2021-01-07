@@ -109,5 +109,12 @@
         android:id="@+id/studentEditMarkFragment"
         android:name="com.example.asystentnauczyciela.view.StudentEditMarkFragment"
         android:label="fragment_student_edit_mark"
-        tools:layout="@layout/fragment_student_edit_mark" />
+        tools:layout="@layout/fragment_student_edit_mark" >
+        <argument
+            android:name="mark_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_studentEditMarkFragment_to_studentMarkFragment"
+            app:destination="@id/studentMarkFragment" />
+    </fragment>
 </navigation>

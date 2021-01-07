@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.asystentnauczyciela.model.SCDatabase
 import com.example.asystentnauczyciela.model.Course
+import com.example.asystentnauczyciela.model.Student
 import com.example.asystentnauczyciela.model.repositories.CourseRepository
 import kotlinx.coroutines.launch
 
@@ -50,5 +51,19 @@ class CourseViewModel(application: Application) : AndroidViewModel(application) 
     fun onNavigationCompleted() {
         navigationToEdit.value = null
         navigationToMarks.value = null
+    }
+
+    fun getCourseById(courseID: Int): Course {
+        var thisCourse: Course = Course(id=0,"Nie ma takiego kursu")
+        if(courses.value !=null){
+            for (course in courses.value!!){
+                if(course.id == courseID)
+                    return course
+
+
+            }
+        }
+
+        return thisCourse
     }
 }

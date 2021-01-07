@@ -61,19 +61,18 @@ class StudentViewModel(application: Application): AndroidViewModel(application) 
         navigationToEditMark.value = null
     }
 
+    fun getStudentById(studentID: Int):Student{
+        var thisStudent:Student = Student(id=0,"Nie ma takiego","studenta")
+        if(students.value !=null){
+            for (student in students.value!!){
+                if(student.id == studentID)
+                    return student
 
 
-//    @RequiresApi(Build.VERSION_CODES.N)
-//    fun mapOfStudents(): MutableMap<Int, Boolean> {
-//        for (student in students.value!!){
-//            checkedStudents.put(student.id,false)
-//        }
-//        if(!studentCourses.value.isNullOrEmpty()){
-//            for(sc in studentCourses.value!!){
-//                checkedStudents.replace(sc.student_id,true)
-//            }
-//        }
-//        return checkedStudents
-//    }
+            }
+        }
+
+        return thisStudent
+    }
 
 }
