@@ -63,7 +63,7 @@ class MarksListAdapter(private val markViewModel: MarkViewModel,private val stud
 
 
 object MarksListDiff: DiffUtil.ItemCallback<Mark>(){
-    override fun areItemsTheSame(oldItem: Mark, newItem: Mark)= oldItem == newItem
+    override fun areItemsTheSame(oldItem: Mark, newItem: Mark)= oldItem === newItem
 
     override fun areContentsTheSame(oldItem: Mark, newItem: Mark)= oldItem == newItem
 }

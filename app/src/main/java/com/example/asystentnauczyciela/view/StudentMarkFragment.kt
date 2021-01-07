@@ -37,11 +37,7 @@ class StudentMarkFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-
-    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +60,9 @@ class StudentMarkFragment : Fragment() {
             viewModelMark.marks.observe(viewLifecycleOwner,{
                 MarksListAdapter.submitList(it)
             })
+
+
+
             viewModelMark.navigationToEdit.observe(viewLifecycleOwner,{markID :Int?->
                 markID?.let{markID:Int ->
                 val bundle = bundleOf(MARK_ID to markID)
