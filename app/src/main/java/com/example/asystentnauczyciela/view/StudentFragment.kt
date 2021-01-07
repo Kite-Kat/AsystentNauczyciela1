@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -78,8 +79,24 @@ class StudentFragment : Fragment() {
             this.layoutManager = studentLayoutManager
             this.adapter = studentAdapter
         }
-        buttonAddStudent.setOnClickListener { viewModelStudent.addStudent(StudentNameLabel.text.toString(), StudentSurnameLabel.text.toString())
-        view.hideKeyboard()}
+        buttonAddStudent.setOnClickListener {
+            val thisStudent = viewModelStudent.students.value?.find {
+                x -> x.name == StudentNameLabel.text.toString() && x.surname == StudentSurnameLabel.text.toString() }
+            if(StudentNameLabel.text.isEmpty() && StudentSurnameLabel.text.isEmpty()){
+
+                Toast.makeText(context, "Imię i nazwisko studenta musi być uzupełnione",Toast.LENGTH_SHORT).show()
+            }
+            else if (thisStudent != null){
+                Toast.makeText(context, "Taki student jest już zapisany",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                viewModelStudent.addStudent(StudentNameLabel.text.toString(), StudentSurnameLabel.text.toString())
+                StudentNameLabel.setText("")
+                StudentSurnameLabel.setText("")
+            }
+
+
+            view.hideKeyboard()}
 
     }
 

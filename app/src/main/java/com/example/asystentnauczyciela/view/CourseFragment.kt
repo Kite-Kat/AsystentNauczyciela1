@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.view_model.CourseListAdapter
 import com.example.asystentnauczyciela.view_model.CourseViewModel
 import kotlinx.android.synthetic.main.fragment_course.*
+import kotlinx.android.synthetic.main.fragment_student.*
 
 
 private lateinit var viewModelCourse: CourseViewModel
@@ -82,8 +84,27 @@ class CourseFragment : Fragment() {
             this.layoutManager = courseLayoutManager
             this.adapter = courseAdapter
         }
-        buttonAddCourse.setOnClickListener { viewModelCourse.addCourse(CourseNameLabel.text.toString())
-        view.hideKeyboard() }
+        buttonAddCourse.setOnClickListener {
+            val thisCourse = viewModelCourse.courses.value?.find {
+                x -> x.name == CourseNameLabel.text.toString()  }
+            if(CourseNameLabel.text.isEmpty()){
+
+                Toast.makeText(context, "Nazwa kursu musi być uzupełniona", Toast.LENGTH_SHORT).show()
+            }
+            else if (thisCourse != null){
+                Toast.makeText(context, "Taki kurs jest już dodany", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                viewModelCourse.addCourse(CourseNameLabel.text.toString())
+                CourseNameLabel.setText("")
+            }
+
+
+            view.hideKeyboard()
+
+
+
+         }
 
 
 

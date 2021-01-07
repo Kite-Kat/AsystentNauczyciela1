@@ -1,10 +1,13 @@
 package com.example.asystentnauczyciela.view
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.model.Course
 import com.example.asystentnauczyciela.view_model.*
+import kotlinx.android.synthetic.main.fragment_course.*
 import kotlinx.android.synthetic.main.fragment_course_edit.*
 
 const val COURSE_ID = "courseId"
@@ -85,18 +89,27 @@ class CourseEditFragment : Fragment() {
                 }
             }
             buttonSaveEditCourse.setOnClickListener {
-                viewModelCourse.updateCourse(Course(courseId,CourseEditName.text.toString()))
-                viewModelSc.addStudentToSCDatabase(addStudentAdapter.checkedStudents, courseId)
 
-                view.findNavController().navigate(R.id.action_courseEditFragment_to_courseFragment)
-                
+                if(CourseEditName.text.isEmpty()){
 
+                    Toast.makeText(context, "Nazwa kursu musi być uzupełniona", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    viewModelCourse.updateCourse(Course(courseId, CourseEditName.text.toString()))
+                    viewModelSc.addStudentToSCDatabase(addStudentAdapter.checkedStudents, courseId)
 
+                    view.findNavController().navigate(R.id.action_courseEditFragment_to_courseFragment)
+                }
+
+                    view.hideKeyboard()
             }
 
         }
 
     }
-
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
 }
 

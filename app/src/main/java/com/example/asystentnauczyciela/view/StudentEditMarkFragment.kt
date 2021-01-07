@@ -1,5 +1,6 @@
 package com.example.asystentnauczyciela.view
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -97,8 +99,10 @@ class StudentEditMarkFragment : Fragment() {
             buttonEdycjaOcenyZapisz.setOnClickListener {
                 viewModelMark.updateMark(Mark(mark.id,student.id,course.id,spinnerEdycjaOceny.selectedItem.toString().toDouble(),
                                         SimpleDateFormat("dd-MM-yyyy").format(Date()), editTextEdycjaOcenyNotatka.text.toString()))
+
                 val bundle = bundleOf(COURSE_id to mark.course_id, student_ID to mark.student_id)
                 findNavController().navigate(R.id.action_studentEditMarkFragment_to_studentMarkFragment,bundle)
+                view.hideKeyboard()
             }
 
         }
@@ -110,5 +114,8 @@ class StudentEditMarkFragment : Fragment() {
 
 
     }
-
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
 }

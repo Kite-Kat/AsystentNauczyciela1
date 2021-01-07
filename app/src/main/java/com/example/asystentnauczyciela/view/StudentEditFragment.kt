@@ -1,10 +1,13 @@
 package com.example.asystentnauczyciela.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +16,7 @@ import com.example.asystentnauczyciela.R
 import com.example.asystentnauczyciela.model.Student
 import com.example.asystentnauczyciela.view_model.*
 import kotlinx.android.synthetic.main.fragment_course_edit.*
+import kotlinx.android.synthetic.main.fragment_student.*
 import kotlinx.android.synthetic.main.fragment_student_edit.*
 
 const val STUDENT_ID = "studentId"
@@ -84,16 +88,28 @@ class StudentEditFragment : Fragment() {
             }
 
             buttonSaveEditStudent.setOnClickListener {
-                viewModelStudent.updateStudent(Student(studentId,StudentEditName.text.toString(),StudentEditSurname.text.toString()))
-                viewModelSc.addCourseToSCDatabase(addCourseAdapter.checkedCourses, studentId)
 
-                view.findNavController().navigate(R.id.action_studentEditFragment_to_studentFragment)
+                if( !StudentEditName.text.isEmpty() && !StudentEditSurname.text.isEmpty()){
+                    viewModelStudent.updateStudent(Student(studentId,StudentEditName.text.toString(),StudentEditSurname.text.toString()))
+                    viewModelSc.addCourseToSCDatabase(addCourseAdapter.checkedCourses, studentId)
 
+                    view.findNavController().navigate(R.id.action_studentEditFragment_to_studentFragment)
+
+                }
+                else{
+                    Toast.makeText(context, "Imię i nazwisko studenta musi być uzupełnione", Toast.LENGTH_SHORT).show()
+
+                }
+
+                    view.hideKeyboard()
             }
 
         }
 
     }
 
-    companion object { fun newInstance() = StudentEditFragment() }
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
 }
